@@ -3,8 +3,8 @@ PROJECT_DIRECTORY="/app/${DIRECTORY_NAME:-project}"
 SUBFOLDER=${SUBFOLDER_PATH:-""}  # Fetch the sub-folder path from an environment variable
 
 mkdir -p ~/.ssh
-# Put the git key in place
-cat /run/secrets/git-key >> ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+# Put the git key in place, match the file name to the Portainer seceret name
+cat /run/secrets/GIT_SSH_KEY >> ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
 
 git config --global pull.rebase ${GIT_PULL_REBASE:-false}
 

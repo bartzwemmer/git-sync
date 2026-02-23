@@ -4,7 +4,13 @@ SUBFOLDER=${SUBFOLDER_PATH:-""}  # Fetch the sub-folder path from an environment
 
 mkdir -p ~/.ssh
 # Put the git key in place, match the file name to the Portainer seceret name
-echo $GIT_SSH_KEY >> ~/.ssh/id_ed25519 && chmod 400 ~/.ssh/id_ed25519
+if [ -z "$GIT_SSH_KEY" ]; then
+  echo "Error: GIT_SSH_KEY environment variable is not set." >&2
+  exit 1
+fi
+printf "%s\n" "$GIT_SSH_KEY" > ~/.ssh/id_ed25519
+# SSH requires strict permissions on the key file. 600 is standard (read/write for owner).
+chmod 600 ~/.ssh/id_ed25519
 
 git config --global pull.rebase ${GIT_PULL_REBASE:-false}
 

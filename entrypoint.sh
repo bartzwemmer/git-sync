@@ -1,9 +1,11 @@
 #!/bin/sh
+set -eu
+
 PROJECT_DIRECTORY="/app/${DIRECTORY_NAME:-project}"
 SUBFOLDER=${SUBFOLDER_PATH:-""}  # Fetch the sub-folder path from an environment variable
 
 mkdir -p ~/.ssh
-# Put the git key in place, match the file name to the Portainer seceret name
+# Put the git key in place, match the file name to the Portainer secret name
 if [ -z "$GIT_SSH_KEY" ]; then
   echo "Error: GIT_SSH_KEY environment variable is not set." >&2
   exit 1

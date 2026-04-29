@@ -14,7 +14,7 @@ Create a `.env` file with the following contents for local testing:
 ```
 GIT_SSH_KEY="foo"
 REPO_URL="git@github.com:org/repo.git"
-GIT_URL="github.com"
+GIT_URL="github.com" # Do not include https:// or .git
 SUBFOLDER_PATH="dags"
 GIT_BRANCH="main"
 DIRECTORY_NAME="directory"

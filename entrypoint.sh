@@ -5,7 +5,7 @@ PROJECT_DIRECTORY="/app/${DIRECTORY_NAME:-project}"
 SUBFOLDER=${SUBFOLDER_PATH:-""}  # Fetch the sub-folder path from an environment variable
 
 mkdir -p ~/.ssh
-# Put the git key in place, match the file name to the Portainer secret name
+# Put the git key in place
 if [ -z "$GIT_SSH_KEY" ]; then
   echo "Error: GIT_SSH_KEY environment variable is not set." >&2
   exit 1
@@ -16,8 +16,13 @@ chmod 600 ~/.ssh/id_ed25519
 
 git config --global pull.rebase ${GIT_PULL_REBASE:-false}
 
+if [ ! -d "$PROJECT_DIRECTORY" ]; then
+  echo "Creating project directory: $PROJECT_DIRECTORY" >&2
+  mkdir -p $PROJECT_DIRECTORY
+fi
+
 if [ ! -d "$PROJECT_DIRECTORY/.git" ]; then
-  echo "Cloning the repository: $REPO_URL"
+  echo "Cloning the repository: $REPO_URL" >&2
   mkdir -p $PROJECT_DIRECTORY
   ssh-keyscan ${GIT_URL:-github.com} >> ~/.ssh/known_hosts
   git init $PROJECT_DIRECTORY
@@ -29,6 +34,7 @@ fi
 
 if [[ "$PWD" != "$PROJECT_DIRECTORY" ]]
 then
+    echo "Changing directory to $PROJECT_DIRECTORY" >&2
     cd "$PROJECT_DIRECTORY"
 fi
 

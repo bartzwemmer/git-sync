@@ -1,4 +1,4 @@
-FROM alpine:3.18.0
+FROM alpine:3.23.4
 
 LABEL maintainer=databurstacademy@gmail.com
 LABEL image_name="git-sync"
@@ -10,5 +10,5 @@ WORKDIR /app
 
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
-ENTRYPOINT "./entrypoint.sh"
+ENTRYPOINT ["./entrypoint.sh"]
 
